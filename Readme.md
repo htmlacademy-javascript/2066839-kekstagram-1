@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Владимир Баранов](https://up.htmlacademy.ru/javascript-individual/1/user/2066839).
-* Наставник: `Андрей Изосимов`.
+* Наставник: `Андрей Изосимов`(https://htmlacademy.ru/profile/id605037)
 
 ---
 
