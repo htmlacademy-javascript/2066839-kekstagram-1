@@ -22,8 +22,6 @@ const NAMES = ['Надежда', 'Варвара', 'Алексей', 'Верон
 
 const MESSAGE = ['Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'В целом всё неплохо. Но не всё.', 'Всё отлично!'];
 
-// const ID = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
-
 const SIMILAR_USER_COUNT = 25;
 
 const getRandomInteger = (a, b) => {
@@ -45,6 +43,7 @@ function createIdGenerator() {
 
 const generateId = createIdGenerator();
 const generateIdPhoto = createIdGenerator();
+const generateIdComment = createIdGenerator();
 
 // console.log(generateId());
 
@@ -54,7 +53,7 @@ const getIndex = () => ({
   description: getRandomElement(DESCRIPTION),
   likes: getRandomInteger(15, 200),
   comments: {
-    id: getRandomInteger(0, 9999),
+    id: generateIdComment(),
     avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
     message: getRandomElement(MESSAGE),
     name: getRandomElement(NAMES),
