@@ -35,9 +35,20 @@ const getRandomInteger = (a, b) => {
 
 const getRandomElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+function createIdGenerator() {
+  let lastGeneratedId = 0;
+  return function () {
+    lastGeneratedId += 1;
+    return lastGeneratedId;
+  };
+}
+
+const generateId = createIdGenerator();
+// console.log(generateId());
+
 const getIndex = () => ({
-  id: getRandomElement(ID),
-  photo: `photos/${ getRandomElement(ID) }.jpg`,
+  id: generateId(),
+  photo: `photos/${generateId() }.jpg`,
   description: getRandomElement(DESCRIPTION),
   likes: getRandomInteger(15, 200),
   comments: {
@@ -49,5 +60,4 @@ const getIndex = () => ({
 });
 
 const userIdGenerator = Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
-
-// console.log(userIdGenerator);
+console.log(userIdGenerator);
