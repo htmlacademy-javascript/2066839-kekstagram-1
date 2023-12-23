@@ -1,4 +1,9 @@
-const DESCRIPTION = ['Цветочная симфония: Прекрасное сочетание красок и фактур цветов создает нежную и романтическую картину, наполненную ароматом и красотой природы.',
+const SIMILAR_USER_COUNT = 25;
+const AVATAR_COUNT = 6;
+const LIKE_MIN_COUNT = 15;
+const LIKE_MAX_COUNT = 200;
+const COMMENTS_COUNT = 15;
+const DESCRIPTIONS = ['Цветочная симфония: Прекрасное сочетание красок и фактур цветов создает нежную и романтическую картину, наполненную ароматом и красотой природы.',
 
   'Магический закат: Золотистые лучи заката погружают мир в сказочную атмосферу.Они играют с контурами деревьев и создают неповторимый рисунок на небе.',
 
@@ -20,9 +25,7 @@ const DESCRIPTION = ['Цветочная симфония: Прекрасное 
 
 const NAMES = ['Надежда', 'Варвара', 'Алексей', 'Вероника', 'Матвей', 'Есения', 'Анна', 'Алия', 'Екатерина', 'Олеся', 'Андрей', 'Арина', 'Виктория', 'Елизавета', 'Давид', 'Аиша', 'Сергей', 'Лев', 'Денис', 'Иван', 'Амина', 'Мирослав', 'Павел', 'Мария', 'Стефания', 'София', 'Аделина', 'Александра', 'Алиса', 'Святослав', 'Леонид', 'Станислав', 'Александр', 'Максим', 'Николай', 'Тимофей', 'Дарина', 'Фёдор', 'Марина', 'Наталья', 'Майя', 'Юрий', 'Михаил', 'Нина', 'Артём', 'Диана', 'Алёна', 'Эмилия', 'Владимир', 'Софья', 'Валентина', 'Ева', 'Никита', 'Евгений', 'Зоя', 'Ариана', 'Леон', 'Марьям', 'Илья', 'Полина'];
 
-const MESSAGE = ['Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'В целом всё неплохо. Но не всё.', 'Всё отлично!'];
-
-const SIMILAR_USER_COUNT = 25;
+const MESSAGES = ['Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'В целом всё неплохо. Но не всё.', 'Всё отлично!'];
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -31,36 +34,46 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const getRandomElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+const getRandomElement = (array) => array[getRandomInteger(0, array.length - 1)];
 
-function createIdGenerator() {
+const createIdGenerator = () => {
   let lastGeneratedId = 0;
-  return function () {
+  return () => {
     lastGeneratedId += 1;
     return lastGeneratedId;
   };
-}
+};
 
 const generateId = createIdGenerator();
 const generateIdPhoto = createIdGenerator();
-const generateIdComment = createIdGenerator();
-
+const generateCommentId = createIdGenerator();
 // console.log(generateId());
+
+const getRandomComments = () => ({
+  id: generateCommentId(),
+  avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
+  message: getRandomElement(MESSAGES),
+  name: getRandomElement(NAMES),
+});
+
+// console.log(getCommentsList);
 
 const getIndex = () => ({
   id: generateId(),
-  photo: `photos/${generateIdPhoto() }.jpg`,
-  description: getRandomElement(DESCRIPTION),
-  likes: getRandomInteger(15, 200),
-  comments: {
-    id: generateIdComment(),
-    avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
-    message: getRandomElement(MESSAGE),
-    name: getRandomElement(NAMES),
-  },
+  url: `photos/${generateIdPhoto()}.jpg`,
+  description: getRandomElement(DESCRIPTIONS),
+  likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
+  comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, getRandomComments),
 });
 
-const generateUserList = Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
+const getRandomUserList = () => {
+  Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
+};
 
+getRandomUserList();
+
+const generateUserList = Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
 // eslint-disable-next-line no-console
 console.log(generateUserList);
+// console.log(generateCommentsList);
+
