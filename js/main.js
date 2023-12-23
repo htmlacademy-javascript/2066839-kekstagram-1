@@ -21,7 +21,7 @@ const DESCRIPTIONS = ['Цветочная симфония: Прекрасное
 
   'Благоухающие яркие тюльпаны: Цветочное море, состоящее из насыщенных разнообразных тюльпанов, придают сказочную атмосферу этому изображению.Каждый цветок – это отдельная палитра пышных оттенков и текстур.',
 
-  'Отражение гор в озере: Зеркальное отражение гор в безмятежной воде создает иллюзию двойного пейзажа, удивляющего и притягательного своей гармонией и прекрасными натуральными цветами.',];
+  'Отражение гор в озере: Зеркальное отражение гор в безмятежной воде создает иллюзию двойного пейзажа, удивляющего и притягательного своей гармонией и прекрасными натуральными цветами.'];
 
 const NAMES = ['Надежда', 'Варвара', 'Алексей', 'Вероника', 'Матвей', 'Есения', 'Анна', 'Алия', 'Екатерина', 'Олеся', 'Андрей', 'Арина', 'Виктория', 'Елизавета', 'Давид', 'Аиша', 'Сергей', 'Лев', 'Денис', 'Иван', 'Амина', 'Мирослав', 'Павел', 'Мария', 'Стефания', 'София', 'Аделина', 'Александра', 'Алиса', 'Святослав', 'Леонид', 'Станислав', 'Александр', 'Максим', 'Николай', 'Тимофей', 'Дарина', 'Фёдор', 'Марина', 'Наталья', 'Майя', 'Юрий', 'Михаил', 'Нина', 'Артём', 'Диана', 'Алёна', 'Эмилия', 'Владимир', 'Софья', 'Валентина', 'Ева', 'Никита', 'Евгений', 'Зоя', 'Ариана', 'Леон', 'Марьям', 'Илья', 'Полина'];
 
@@ -63,17 +63,10 @@ const getIndex = () => ({
   url: `photos/${generateIdPhoto()}.jpg`,
   description: getRandomElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
-  comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, getRandomComments),
+  comments: Array.from({ length: getRandomInteger(1, COMMENTS_COUNT) }, getRandomComments),
 });
 
-const getRandomUserList = () => {
-  Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
-};
+const getRandomUserList = () => Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
 
-getRandomUserList();
-
-const generateUserList = Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
 // eslint-disable-next-line no-console
-console.log(generateUserList);
-// console.log(generateCommentsList);
-
+console.log(getRandomUserList());
