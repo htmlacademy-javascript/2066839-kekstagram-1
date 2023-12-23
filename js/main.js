@@ -78,6 +78,7 @@ const getIndex = () => ({
   comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, getRandomComments),
 });
 
-const generateUserList = Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
+const generateUserList = () => Array.from({ length: SIMILAR_USER_COUNT }, getIndex);
+generateUserList();
 // eslint-disable-next-line no-console
-console.log(generateUserList);
+// console.log(generateUserList());
