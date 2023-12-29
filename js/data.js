@@ -65,7 +65,5 @@ const getUser = () => ({
 });
 
 const generateUserList = () => Array.from({ length: SIMILAR_USER_COUNT }, getUser);
-// generateUserList();
-// eslint-disable-next-line no-console
 
 export { generateUserList };
