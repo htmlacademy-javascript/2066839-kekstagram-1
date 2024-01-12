@@ -15,7 +15,5 @@ const idGenerator = () => {
   };
 };
 
-export { getRandomElement };
-export { getRandomInteger };
-export { idGenerator };
+export { getRandomElement, getRandomInteger, idGenerator };
 
