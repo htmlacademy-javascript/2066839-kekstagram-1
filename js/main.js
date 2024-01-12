@@ -1,4 +1,4 @@
-import { generateUserList } from './data.js';
+import { generateUserList } from './generate-user.js';
 
 generateUserList();
 // console.log(generateUserList());
