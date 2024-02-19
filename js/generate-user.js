@@ -1,4 +1,4 @@
-import { getRandomElement, getRandomInteger, idGenerator } from './util.js';
+import { getRandomElement, getRandomInteger, idGenerator} from './util.js';
 
 const SIMILAR_USER_COUNT = 25;
 const AVATAR_COUNT = 6;
