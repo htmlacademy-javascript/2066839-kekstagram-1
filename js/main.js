@@ -1,4 +1,4 @@
 import { generateUserList } from './generate-user.js';
+import { renderThumbnails } from './render-thumbnails.js';
 
-generateUserList();
-// console.log(generateUserList());
+renderThumbnails(generateUserList());
