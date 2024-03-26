@@ -1,6 +1,6 @@
-import { getRandomElement, getRandomInteger, idGenerator} from './util.js';
+import { getRandomElement, getRandomInteger} from './util.js';
 
-const SIMILAR_USER_COUNT = 25;
+const PHOTO_COUNT = 25;
 const AVATAR_COUNT = 6;
 const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
@@ -38,30 +38,21 @@ const MESSAGES = [
   'Всё отлично!'
 ];
 
-const generateUserId = idGenerator();
-const generatePhotoId = idGenerator();
-const generateCommentId = idGenerator();
-
-const generateRandomMessage = () =>
-  Array.from({ length: getRandomInteger(1, 6) }, () =>
-    getRandomElement(MESSAGES))
-    .join(' ');
-
-const getRandomComment = () => ({
-  id: generateCommentId(),
+const createRandomComment = (id) => ({
+  id,
   avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
-  message: generateRandomMessage(),
+  message: getRandomElement(MESSAGES),
   name: getRandomElement(NAMES),
 });
 
-const getUser = () => ({
-  id: generateUserId(),
-  url: `photos/${generatePhotoId()}.jpg`,
+const createPhoto = (id) => ({
+  id,
+  url: `photos/${id}.jpg`,
   description: getRandomElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
-  comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, getRandomComment),
+  comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, (_, i) => createRandomComment(i)),
 });
 
-const generateUserList = () => Array.from({ length: SIMILAR_USER_COUNT }, getUser);
+export const createGallary = () => Array.from({ length: PHOTO_COUNT }, (_, i) => createPhoto(i + 1));
 
-export { generateUserList };
+
