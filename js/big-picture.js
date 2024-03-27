@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
 const commentsCount = document.querySelector('.social__comment-count');
