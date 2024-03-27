@@ -39,8 +39,8 @@ export const showBigPicture = (data) => {
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
   body.classList.add('.modal-open');
-  commentsCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  commentsCount.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
 
   renderPhotoDetails(data);
   renderComments(data.comments);
