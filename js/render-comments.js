@@ -38,21 +38,19 @@ const MESSAGES = [
   'Всё отлично!'
 ];
 
-const createRandomComment = (id) => ({
-  id,
+const createRandomComment = (index) => ({
+  id: index,
   avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
   message: getRandomElement(MESSAGES),
   name: getRandomElement(NAMES),
 });
 
-const createPhoto = (id) => ({
-  id,
-  url: `photos/${id}.jpg`,
+const createPhoto = (index) => ({
+  id: index,
+  url: `photos/${index}.jpg`,
   description: getRandomElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
-  comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, (_, i) => createRandomComment(i)),
+  comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, (_, i) => createRandomComment(i + 1)),
 });
 
-export const createGallary = () => Array.from({ length: PHOTO_COUNT }, (_, i) => createPhoto(i + 1));
-
-
+export const createGallery = () => Array.from({ length: PHOTO_COUNT }, (_, i) => createPhoto(i + 1));
