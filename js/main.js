@@ -1,4 +1,5 @@
-import { generateUserList } from './generate-user.js';
-import { renderThumbnails } from './render-thumbnails.js';
+import { createGallery } from './render-comments.js';
+import { renderGallery } from './gallery.js';
 
-renderThumbnails(generateUserList());
+renderGallery(createGallery());
+// console.log(createGallery());
