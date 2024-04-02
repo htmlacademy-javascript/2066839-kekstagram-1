@@ -17,7 +17,7 @@ const createThumbnail = ({url, description, comments, likes, id}) => {
   return thumbnail;
 };
 
-export const renderThumbnail = (pictures) => {
+export const renderThumbnails = (pictures) => {
   const fragment = document.createDocumentFragment();
 
   pictures.forEach((picture) => {

@@ -1,4 +1,4 @@
-import { renderThumbnail } from './render-thumbnails.js';
+import { renderThumbnails } from './render-thumbnails.js';
 import { showBigPicture } from './big-picture.js';
 
 const container = document.querySelector('.pictures');
@@ -20,6 +20,6 @@ export const renderGallery = (pictures) => {
     showBigPicture(picture);
   });
 
-  renderThumbnail(pictures);
+  renderThumbnails(pictures);
 };
 
