@@ -20,6 +20,6 @@ export const renderGallery = (pictures) => {
     showBigPicture(picture);
   });
 
-  renderThumbnails(pictures, container);
+  renderThumbnails(pictures);
 };
 

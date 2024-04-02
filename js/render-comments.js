@@ -1,6 +1,6 @@
-import { getRandomElement, getRandomInteger} from './util.js';
+import { getRandomElement, getRandomInteger } from './util.js';
 
-const PHOTO_COUNT = 25;
+const MAX_PHOTOS = 25;
 const AVATAR_COUNT = 6;
 const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
@@ -27,7 +27,9 @@ const DESCRIPTIONS = [
   'Отражение гор в озере: Зеркальное отражение гор в безмятежной воде создает иллюзию двойного пейзажа, удивляющего и притягательного своей гармонией и прекрасными натуральными цветами.'
 ];
 
-const NAMES = ['Надежда', 'Варвара', 'Алексей', 'Вероника', 'Матвей', 'Есения', 'Анна', 'Алия', 'Екатерина', 'Олеся', 'Андрей', 'Арина', 'Виктория', 'Елизавета', 'Давид', 'Аиша', 'Сергей', 'Лев', 'Денис', 'Иван', 'Амина', 'Мирослав', 'Павел', 'Мария', 'Стефания', 'София', 'Аделина', 'Александра', 'Алиса', 'Святослав', 'Леонид', 'Станислав', 'Александр', 'Максим', 'Николай', 'Тимофей', 'Дарина', 'Фёдор', 'Марина', 'Наталья', 'Майя', 'Юрик', 'Михаил', 'Нина', 'Артём', 'Диана', 'Алёна', 'Эмилия', 'Владимир', 'Софья', 'Валентина', 'Ева', 'Никита', 'Евгений', 'Зоя', 'Ариана', 'Леон', 'Марьям', 'Илья', 'Полина'];
+const NAMES = [
+  'Надежда', 'Варвара', 'Алексей', 'Вероника', 'Матвей', 'Есения', 'Анна', 'Алия', 'Екатерина', 'Олеся', 'Андрей', 'Арина', 'Виктория', 'Елизавета', 'Давид', 'Аиша', 'Сергей', 'Лев', 'Денис', 'Иван', 'Амина', 'Мирослав', 'Павел', 'Мария', 'Стефания', 'София', 'Аделина', 'Александра', 'Алиса', 'Святослав', 'Леонид', 'Станислав', 'Александр', 'Максим', 'Николай', 'Тимофей', 'Дарина', 'Фёдор', 'Марина', 'Наталья', 'Майя', 'Юрик', 'Михаил', 'Нина', 'Артём', 'Диана', 'Алёна', 'Эмилия', 'Владимир', 'Софья', 'Валентина', 'Ева', 'Никита', 'Евгений', 'Зоя', 'Ариана', 'Леон', 'Марьям', 'Илья', 'Полина'
+];
 
 const MESSAGES = [
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
@@ -38,19 +40,19 @@ const MESSAGES = [
   'Всё отлично!'
 ];
 
-const createRandomComment = (index) => ({
-  id: index,
+const createRandomComment = (id) => ({
+  id,
   avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
   message: getRandomElement(MESSAGES),
   name: getRandomElement(NAMES),
 });
 
-const createPhoto = (index) => ({
-  id: index,
-  url: `photos/${index}.jpg`,
+const createPhoto = (id) => ({
+  id,
+  url: `photos/${id}.jpg`,
   description: getRandomElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
   comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, (_, i) => createRandomComment(i + 1)),
 });
 
-export const createGallery = () => Array.from({ length: PHOTO_COUNT }, (_, i) => createPhoto(i + 1));
+export const createGallery = () => Array.from({ length: MAX_PHOTOS }, (_, i) => createPhoto(i + 1));
