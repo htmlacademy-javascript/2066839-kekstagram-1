@@ -86,4 +86,5 @@ const onCancelButtonClick = () => hideBigPicture();
 const onCommentsLoaderClick = () => renderComments();
 
 bigPictureCancel.addEventListener('click', onCancelButtonClick);
+
 commentsLoader.addEventListener('click', onCommentsLoaderClick);
