@@ -8,4 +8,3 @@ const getRandomInteger = (a, b) => {
 const getRandomElement = (array) => array[getRandomInteger(0, array.length - 1)];
 
 export { getRandomElement, getRandomInteger };
-
