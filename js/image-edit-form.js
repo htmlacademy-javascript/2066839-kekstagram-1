@@ -6,7 +6,7 @@ const TAGS_ERROR_MESSAGE = 'Хэштеги не валидны';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
 const fileField = imageUploadForm.querySelector('.img-upload__input');
-const imageEditForm = imageUploadForm.querySelector('.img-upload__overlay');
+const formOverlay = imageUploadForm.querySelector('.img-upload__overlay');
 const imageEditCloseButton = imageUploadForm.querySelector('.img-upload__cancel');
 const tagsField = imageUploadForm.querySelector('.text__hashtags');
 const commentsField = imageUploadForm.querySelector('.text__description');
@@ -57,14 +57,14 @@ const onSubmitForm = (evt) => {
 imageUploadForm.addEventListener('submit', onSubmitForm);
 
 const hideImageForm = () => {
-  imageEditForm.classList.add('hidden');
+  formOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   fileField.value = '';
 };
 
 const showImageForm = () => {
-  imageEditForm.classList.remove('hidden');
+  formOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   imageEditCloseButton.addEventListener('click', () => hideImageForm());

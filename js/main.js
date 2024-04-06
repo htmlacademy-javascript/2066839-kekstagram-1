@@ -1,5 +1,6 @@
 import { createGallery } from './render-comments.js';
 import { renderGallery } from './gallery.js';
-import './uploading-image.js';
+import './image-edit-form.js';
+
 renderGallery(createGallery());
 // console.log(createGallery());
