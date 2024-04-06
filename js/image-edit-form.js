@@ -19,10 +19,7 @@ const pristine = new Pristine(imageUploadForm, {
 
 const isTagsCountValid = (tags) => tags.length <= MAX_TAG_COUNT;
 
-const isTagsValid = (tags) => {
-  tags.every((tag) => VALID_TAGS.test(tag) && !!tags.length);
-  return tags;
-};
+const isTagsValid = (tags) => tags.every((tag) => VALID_TAGS.test(tag) && !!tags.length);
 
 const isTagsUnique = (tags) => tags.length === new Set(tags).size;
 
