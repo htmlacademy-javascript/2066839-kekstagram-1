@@ -1,14 +1,14 @@
-const MAX_COMMENT_SYMBOL_COUNT = 140;
-const MAX_HASHTAG_COUNT = 5;
+const MAX_COMMENT_LENGTH = 140;
+const MAX_TAG_COUNT = 5;
 const COMMENTS_ERROR_MESSAGE = 'Не более 140 символов';
-const VALID_HASHTAGS = /^#[a-zа-яё0-9]{1,19}$/i;
-const HASHTAGS_ERROR_MESSAGE = 'Хэштег не валиден';
+const VALID_TAGS = /^#[a-zа-яё0-9]{1,19}$/i;
+const TAGS_ERROR_MESSAGE = 'Хэштег не валиден';
 
 const form = document.querySelector('.img-upload__form');
 const fileField = form.querySelector('.img-upload__input');
 const imageEditForm = form.querySelector('.img-upload__overlay');
 const imageEditCloseButton = form.querySelector('.img-upload__cancel');
-const hashtagsField = form.querySelector('.text__hashtags');
+const tagsField = form.querySelector('.text__hashtags');
 const commentsField = form.querySelector('.text__description');
 
 const pristine = new Pristine(form, {
@@ -17,33 +17,34 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper__error',
 });
 
-const isValidCount = (tags) => tags.length <= MAX_HASHTAG_COUNT;
+const isValidCount = (tags) => tags.length <= MAX_TAG_COUNT;
 
-const isValidEveryTag = (tags) => {
-  const isValidTag = tags.every((tag) => VALID_HASHTAGS.test(tag) && !!tags.length);
-  return isValidTag;
+const isValidEveryTag = (value) => {
+  const tags = value.every((tag) => VALID_TAGS.test(tag) && !!value.length);
+  return tags;
 };
 
 const isUniqueTags = (tags) => tags.length === new Set(tags).size;
 
-const isValidHashteg = (value) => {
+const isValidTag = (value) => {
   const tags = value.toLowerCase()
     .trim()
-    .split(' ');
+    .split(' ')
+    .map((item) => item.trim());
   return isValidCount(tags) && isValidEveryTag(tags) && isUniqueTags(tags);
 };
 
 pristine.addValidator(
-  hashtagsField,
-  isValidHashteg,
-  HASHTAGS_ERROR_MESSAGE
+  tagsField,
+  isValidTag,
+  TAGS_ERROR_MESSAGE
 );
 
-const isValidDescription = (value) => value.length <= MAX_COMMENT_SYMBOL_COUNT;
+const isDescriptionValid = (value) => value.length <= MAX_COMMENT_LENGTH;
 
 pristine.addValidator(
   commentsField,
-  isValidDescription,
+  isDescriptionValid,
   COMMENTS_ERROR_MESSAGE
 );
 
@@ -54,29 +55,29 @@ const onSubmitForm = (evt) => {
 
 form.addEventListener('submit', onSubmitForm);
 
-const hideFormImageEdit = () => {
+const hideImageForm = () => {
   imageEditForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   fileField.value = '';
 };
 
-const showFormImageEdit = () => {
+const showImageForm = () => {
   imageEditForm.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  imageEditCloseButton.addEventListener('click', () => hideFormImageEdit());
+  imageEditCloseButton.addEventListener('click', () => hideImageForm());
 };
 
 const isTextFieldFocused = () =>
-  document.activeElement === hashtagsField ||
+  document.activeElement === tagsField ||
   document.activeElement === commentsField;
 
 function onDocumentKeydown(evt) {
   if (evt.key === 'Escape' && !isTextFieldFocused()) {
     evt.preventDefault();
-    hideFormImageEdit();
+    hideImageForm();
   }
 }
 
-fileField.addEventListener('change', () => showFormImageEdit());
+fileField.addEventListener('change', () => showImageForm());
