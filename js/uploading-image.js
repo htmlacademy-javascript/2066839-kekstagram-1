@@ -19,24 +19,25 @@ const pristine = new Pristine(imageUploadForm, {
 
 const isTagsCountValid = (tags) => tags.length <= MAX_TAG_COUNT;
 
-const isTagsValid = (value) => {
-  const tags = value.every((tag) => VALID_TAGS.test(tag) && !!value.length);
+const isTagsValid = (tags) => {
+  tags.every((tag) => VALID_TAGS.test(tag) && !!tags.length);
   return tags;
 };
 
 const isTagsUnique = (tags) => tags.length === new Set(tags).size;
 
-const isTagValid = (value) => {
+const isTagsFieldValid = (value) => {
   const tags = value.toLowerCase()
     .trim()
     .split(' ')
     .map((item) => item.trim());
+
   return isTagsCountValid(tags) && isTagsValid(tags) && isTagsUnique(tags);
 };
 
 pristine.addValidator(
   tagsField,
-  isTagValid,
+  isTagsFieldValid,
   TAGS_ERROR_MESSAGE
 );
 
