@@ -2,41 +2,41 @@ const MAX_COMMENT_LENGTH = 140;
 const MAX_TAG_COUNT = 5;
 const COMMENTS_ERROR_MESSAGE = 'Не более 140 символов';
 const VALID_TAGS = /^#[a-zа-яё0-9]{1,19}$/i;
-const TAGS_ERROR_MESSAGE = 'Хэштег не валиден';
+const TAGS_ERROR_MESSAGE = 'Хэштеги не валиден';
 
-const form = document.querySelector('.img-upload__form');
-const fileField = form.querySelector('.img-upload__input');
-const imageEditForm = form.querySelector('.img-upload__overlay');
-const imageEditCloseButton = form.querySelector('.img-upload__cancel');
-const tagsField = form.querySelector('.text__hashtags');
-const commentsField = form.querySelector('.text__description');
+const imageUploadForm = document.querySelector('.img-upload__form');
+const fileField = imageUploadForm.querySelector('.img-upload__input');
+const imageEditForm = imageUploadForm.querySelector('.img-upload__overlay');
+const imageEditCloseButton = imageUploadForm.querySelector('.img-upload__cancel');
+const tagsField = imageUploadForm.querySelector('.text__hashtags');
+const commentsField = imageUploadForm.querySelector('.text__description');
 
-const pristine = new Pristine(form, {
+const pristine = new Pristine(imageUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__error',
 });
 
-const isValidCount = (tags) => tags.length <= MAX_TAG_COUNT;
+const isTagsCountValid = (tags) => tags.length <= MAX_TAG_COUNT;
 
-const isValidEveryTag = (value) => {
+const isTagsValid = (value) => {
   const tags = value.every((tag) => VALID_TAGS.test(tag) && !!value.length);
   return tags;
 };
 
-const isUniqueTags = (tags) => tags.length === new Set(tags).size;
+const isTagsUnique = (tags) => tags.length === new Set(tags).size;
 
-const isValidTag = (value) => {
+const isTagValid = (value) => {
   const tags = value.toLowerCase()
     .trim()
     .split(' ')
     .map((item) => item.trim());
-  return isValidCount(tags) && isValidEveryTag(tags) && isUniqueTags(tags);
+  return isTagsCountValid(tags) && isTagsValid(tags) && isTagsUnique(tags);
 };
 
 pristine.addValidator(
   tagsField,
-  isValidTag,
+  isTagValid,
   TAGS_ERROR_MESSAGE
 );
 
@@ -53,7 +53,7 @@ const onSubmitForm = (evt) => {
   pristine.validate();
 };
 
-form.addEventListener('submit', onSubmitForm);
+imageUploadForm.addEventListener('submit', onSubmitForm);
 
 const hideImageForm = () => {
   imageEditForm.classList.add('hidden');
