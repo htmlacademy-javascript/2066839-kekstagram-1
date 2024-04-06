@@ -2,7 +2,7 @@ const MAX_COMMENT_LENGTH = 140;
 const MAX_TAG_COUNT = 5;
 const COMMENTS_ERROR_MESSAGE = 'Не более 140 символов';
 const VALID_TAGS = /^#[a-zа-яё0-9]{1,19}$/i;
-const TAGS_ERROR_MESSAGE = 'Хэштеги не валиден';
+const TAGS_ERROR_MESSAGE = 'Хэштеги не валидны';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
 const fileField = imageUploadForm.querySelector('.img-upload__input');
