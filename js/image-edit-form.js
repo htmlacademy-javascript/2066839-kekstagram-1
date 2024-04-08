@@ -1,3 +1,5 @@
+import { resetScaleValue } from './scale.js';
+
 const MAX_COMMENT_LENGTH = 140;
 const MAX_TAG_COUNT = 5;
 const COMMENTS_ERROR_MESSAGE = 'Не более 140 символов';
@@ -58,6 +60,7 @@ const hideImageForm = () => {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   fileField.value = '';
+  resetScaleValue();
 };
 
 const showImageForm = () => {
