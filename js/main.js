@@ -5,4 +5,3 @@ import './scale.js';
 import './effects.js';
 
 renderGallery(createGallery());
-// console.log(createGallery());
