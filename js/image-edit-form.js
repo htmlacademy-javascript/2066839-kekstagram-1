@@ -1,4 +1,5 @@
 import { resetScaleValue } from './scale.js';
+import { resetEffects } from './effects.js';
 
 const MAX_COMMENT_LENGTH = 140;
 const MAX_TAG_COUNT = 5;
@@ -60,7 +61,9 @@ const hideImageForm = () => {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   fileField.value = '';
+  pristine.reset();
   resetScaleValue();
+  resetEffects();
 };
 
 const showImageForm = () => {
