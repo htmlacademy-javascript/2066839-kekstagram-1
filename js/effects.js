@@ -49,8 +49,7 @@ const EFFECTS = [
   }
 ];
 
-const DEFAULT_EFFECT = EFFECTS[0];
-let chosenEffect = DEFAULT_EFFECT;
+let activeEffect = EFFECTS[0];
 
 const imageElement = document.querySelector('.img-upload__preview img');
 const effectsElement = document.querySelector('.effects');
@@ -58,7 +57,7 @@ const valueElement = document.querySelector('.effect-level__value');
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 
-const isDefault = () => chosenEffect === DEFAULT_EFFECT;
+const isDefault = () => activeEffect === EFFECTS[0];
 
 const hideSlider = () => sliderContainerElement.classList.add('hidden');
 
@@ -66,11 +65,11 @@ const showSlider = () => sliderContainerElement.classList.remove('hidden');
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: DEFAULT_EFFECT.min,
-    max: DEFAULT_EFFECT.max,
+    min: EFFECTS[0].min,
+    max: EFFECTS[0].max,
   },
-  start: DEFAULT_EFFECT.max,
-  step: DEFAULT_EFFECT.step,
+  start: EFFECTS[0].max,
+  step: EFFECTS[0].step,
   connect: 'lower',
 });
 
@@ -78,31 +77,25 @@ const onSliderUpdate = () => {
   valueElement.value = sliderElement.noUiSlider.get();
 
   if (isDefault()) {
-    imageElement.style.filter = DEFAULT_EFFECT.style;
+    imageElement.style.removeProperty('filter');
   } else {
-    imageElement.style.filter = `${chosenEffect.style}(${valueElement.value}${chosenEffect.unit})`;
+    imageElement.style.filter = `${activeEffect.style}(${valueElement.value}${activeEffect.unit})`;
   }
 };
 
 const updateSlider = () => {
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: chosenEffect.min,
-      max: chosenEffect.max,
+      min: activeEffect.min,
+      max: activeEffect.max,
     },
-    start: chosenEffect.max,
-    step: chosenEffect.step,
+    start: activeEffect.max,
+    step: activeEffect.step,
   });
-
-  if (isDefault()) {
-    hideSlider();
-  } else {
-    showSlider();
-  }
 };
 
 export const resetEffects = () => {
-  chosenEffect = DEFAULT_EFFECT;
+  activeEffect = EFFECTS[0];
   updateSlider();
 };
 
@@ -111,9 +104,15 @@ const onEffectChange = (evt) => {
     return;
   }
 
-  chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
-  imageElement.className = `effects__preview--${chosenEffect.name}`;
+  activeEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  imageElement.className = `effects__preview--${activeEffect.name}`;
   updateSlider();
+
+  if (isDefault()) {
+    hideSlider();
+  } else {
+    showSlider();
+  }
 };
 
 sliderElement.noUiSlider.on('update', onSliderUpdate);
