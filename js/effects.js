@@ -55,13 +55,8 @@ const imageElement = document.querySelector('.img-upload__preview img');
 const effectsElement = document.querySelector('.effects');
 const valueElement = document.querySelector('.effect-level__value');
 const sliderElement = document.querySelector('.effect-level__slider');
-const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 
 const isDefault = () => activeEffect === EFFECTS[0];
-
-const hideSlider = () => sliderContainerElement.classList.add('hidden');
-
-const showSlider = () => sliderContainerElement.classList.remove('hidden');
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -73,12 +68,20 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
+export const resetEffects = () => {
+  activeEffect = EFFECTS[0];
+  imageElement.removeAttribute('style');
+  sliderElement.setAttribute('disabled', true);
+  imageElement.className = '';
+};
+
 const onSliderUpdate = () => {
   valueElement.value = sliderElement.noUiSlider.get();
 
   if (isDefault()) {
-    imageElement.style.removeProperty('filter');
+    resetEffects();
   } else {
+    sliderElement.removeAttribute('disabled');
     imageElement.style.filter = `${activeEffect.style}(${valueElement.value}${activeEffect.unit})`;
   }
 };
@@ -94,11 +97,6 @@ const updateSlider = () => {
   });
 };
 
-export const resetEffects = () => {
-  activeEffect = EFFECTS[0];
-  updateSlider();
-};
-
 const onEffectChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
@@ -107,12 +105,6 @@ const onEffectChange = (evt) => {
   activeEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
   imageElement.className = `effects__preview--${activeEffect.name}`;
   updateSlider();
-
-  if (isDefault()) {
-    hideSlider();
-  } else {
-    showSlider();
-  }
 };
 
 sliderElement.noUiSlider.on('update', onSliderUpdate);
