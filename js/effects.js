@@ -60,13 +60,9 @@ const sliderContainerElement = document.querySelector('.img-upload__effect-level
 
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
-function hideSlider() {
-  sliderContainerElement.classList.add('hidden');
-}
+const hideSlider = () => sliderContainerElement.classList.add('hidden');
 
-function showSlider() {
-  sliderContainerElement.classList.remove('hidden');
-}
+const showSlider = () => sliderContainerElement.classList.remove('hidden');
 
 noUiSlider.create(sliderElement, {
   range: {
