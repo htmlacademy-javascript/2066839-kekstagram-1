@@ -1,75 +1,69 @@
-const EFFECTS = [
-  {
-    name: 'none',
+const EFFECTS = {
+  none: {
     style: 'none',
     min: 0,
     max: 100,
     step: 1,
     unit: '',
   },
-  {
-    name: 'chrome',
+  chrome: {
     style: 'grayscale',
     step: 0.1,
     min: 0,
     max: 1,
     unit: '',
   },
-  {
-    name: 'sepia',
+  sepia: {
     style: 'sepia',
     step: 0.1,
     min: 0,
     max: 1,
     unit: '',
   },
-  {
-    name: 'marvin',
+  marvin: {
     style: 'invert',
     step: 1,
     min: 0,
     max: 100,
     unit: '%',
   },
-  {
-    name: 'phobos',
+  phobos: {
     style: 'blur',
     step: 0.1,
     min: 0,
     max: 3,
     unit: 'px',
   },
-  {
-    name: 'heat',
+  heat: {
     style: 'brightness',
     step: 0.1,
     min: 1,
     max: 3,
     unit: '',
   }
-];
+};
 
-let activeEffect = EFFECTS[0];
+let activeEffect = EFFECTS.none;
 
 const imageElement = document.querySelector('.img-upload__preview img');
 const effectsElement = document.querySelector('.effects');
 const valueElement = document.querySelector('.effect-level__value');
 const sliderElement = document.querySelector('.effect-level__slider');
 
-const isDefault = () => activeEffect === EFFECTS[0];
+const isDefault = () => activeEffect === EFFECTS.none;
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: EFFECTS[0].min,
-    max: EFFECTS[0].max,
+    min: EFFECTS.none.min,
+    max: EFFECTS.none.max,
   },
-  start: EFFECTS[0].max,
-  step: EFFECTS[0].step,
+  start: EFFECTS.none.max,
+  step: EFFECTS.none.step,
   connect: 'lower',
 });
 
 export const resetEffects = () => {
-  activeEffect = EFFECTS[0];
+  activeEffect = EFFECTS.none;
   imageElement.removeAttribute('style');
   sliderElement.setAttribute('disabled', true);
   imageElement.className = '';
@@ -102,8 +96,8 @@ const onEffectChange = (evt) => {
     return;
   }
 
-  activeEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
-  imageElement.className = `effects__preview--${activeEffect.name}`;
+  activeEffect = EFFECTS[evt.target.value];
+  imageElement.className = `effects__preview--${activeEffect}`;
   updateSlider();
 };
 
