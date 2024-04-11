@@ -45,14 +45,15 @@ const EFFECTS = {
 
 let activeEffect = EFFECTS.none;
 
-const imageElement = document.querySelector('.img-upload__preview img');
-const effectsElement = document.querySelector('.effects');
-const valueElement = document.querySelector('.effect-level__value');
-const sliderElement = document.querySelector('.effect-level__slider');
+const imageEl = document.querySelector('.img-upload__preview img');
+const effectsEl = document.querySelector('.effects');
+const valueEl = document.querySelector('.effect-level__value');
+const sliderEl = document.querySelector('.effect-level__slider');
+const sliderContainerEl = document.querySelector('.img-upload__effect-level');
 
 const isDefault = () => activeEffect === EFFECTS.none;
 
-noUiSlider.create(sliderElement, {
+noUiSlider.create(sliderEl, {
   range: {
     min: EFFECTS.none.min,
     max: EFFECTS.none.max,
@@ -64,24 +65,20 @@ noUiSlider.create(sliderElement, {
 
 export const resetEffects = () => {
   activeEffect = EFFECTS.none;
-  imageElement.removeAttribute('style');
-  sliderElement.setAttribute('disabled', true);
-  imageElement.className = '';
+  imageEl.removeAttribute('style');
+  sliderContainerEl.classList.add('hidden');
 };
 
 const onSliderUpdate = () => {
-  valueElement.value = sliderElement.noUiSlider.get();
+  valueEl.value = sliderEl.noUiSlider.get();
 
-  if (isDefault()) {
-    resetEffects();
-  } else {
-    sliderElement.removeAttribute('disabled');
-    imageElement.style.filter = `${activeEffect.style}(${valueElement.value}${activeEffect.unit})`;
+  if (!isDefault()) {
+    imageEl.style.filter = `${activeEffect.style}(${valueEl.value}${activeEffect.unit})`;
   }
 };
 
 const updateSlider = () => {
-  sliderElement.noUiSlider.updateOptions({
+  sliderEl.noUiSlider.updateOptions({
     range: {
       min: activeEffect.min,
       max: activeEffect.max,
@@ -95,11 +92,15 @@ const onEffectChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
+  activeEffect = EFFECTS[evt.target.value] ?? EFFECTS.none;
 
-  activeEffect = EFFECTS[evt.target.value];
-  imageElement.className = `effects__preview--${activeEffect}`;
-  updateSlider();
+  if (isDefault()) {
+    resetEffects();
+  } else {
+    updateSlider();
+    sliderContainerEl.classList.remove('hidden');
+  }
 };
 
-sliderElement.noUiSlider.on('update', onSliderUpdate);
-effectsElement.addEventListener('change', onEffectChange);
+sliderEl.noUiSlider.on('update', onSliderUpdate);
+effectsEl.addEventListener('change', onEffectChange);
