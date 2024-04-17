@@ -1,3 +1,6 @@
+import { resetScaleValue } from './scale.js';
+import { resetEffects } from './effects.js';
+
 const MAX_COMMENT_LENGTH = 140;
 const MAX_TAG_COUNT = 5;
 const COMMENTS_ERROR_MESSAGE = 'Не более 140 символов';
@@ -19,10 +22,7 @@ const pristine = new Pristine(imageUploadForm, {
 
 const isTagsCountValid = (tags) => tags.length <= MAX_TAG_COUNT;
 
-const isTagsValid = (tags) => {
-  tags.every((tag) => VALID_TAGS.test(tag) && !!tags.length);
-  return tags;
-};
+const isTagsValid = (tags) => tags.every((tag) => VALID_TAGS.test(tag) && !!tags.length);
 
 const isTagsUnique = (tags) => tags.length === new Set(tags).size;
 
@@ -61,6 +61,9 @@ const hideImageForm = () => {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   fileField.value = '';
+  pristine.reset();
+  resetScaleValue();
+  resetEffects();
 };
 
 const showImageForm = () => {
