@@ -1,3 +1,6 @@
+import { showErrorMessage, showSuccessMessage } from './message.js';
+import { showAlert } from './util.js';
+import { sendData } from './api.js';
 import { resetScaleValue } from './scale.js';
 import { resetEffects } from './effects.js';
 
@@ -7,12 +10,18 @@ const COMMENTS_ERROR_MESSAGE = 'Не более 140 символов';
 const VALID_TAGS = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAGS_ERROR_MESSAGE = 'Хэштеги не валидны';
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Отправляю...',
+};
+
 const imageUploadForm = document.querySelector('.img-upload__form');
 const fileField = imageUploadForm.querySelector('.img-upload__input');
 const formOverlay = imageUploadForm.querySelector('.img-upload__overlay');
 const imageEditCloseButton = imageUploadForm.querySelector('.img-upload__cancel');
 const tagsField = imageUploadForm.querySelector('.text__hashtags');
 const commentsField = imageUploadForm.querySelector('.text__description');
+const submitFormButton = imageUploadForm.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(imageUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -49,21 +58,46 @@ pristine.addValidator(
   COMMENTS_ERROR_MESSAGE
 );
 
-const onSubmitForm = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+const blockSubmitButton = () => {
+  submitFormButton.disabled = true;
+  submitFormButton.textContent = SubmitButtonText.SENDING;
 };
 
-imageUploadForm.addEventListener('submit', onSubmitForm);
+const unblockSubmitButton = () => {
+  submitFormButton.disabled = false;
+  submitFormButton.textContent = SubmitButtonText.IDLE;
+};
 
-const hideImageForm = () => {
+export const setOnFormSubmit = (onSuccess) => {
+  imageUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => showAlert('Данные успешно отправлены', 'green'))
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err);
+          showErrorMessage();
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+export const hideImageForm = () => {
   formOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   fileField.value = '';
+  tagsField.value = '';
+  commentsField.value = '';
   pristine.reset();
   resetScaleValue();
   resetEffects();
+  showSuccessMessage();
 };
 
 const showImageForm = () => {
