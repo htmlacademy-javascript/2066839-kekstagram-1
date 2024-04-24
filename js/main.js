@@ -1,13 +1,13 @@
-import { showAlert } from './util.js';
+import { showDialog } from './modals.js';
 import { renderGallery } from './gallery.js';
-import { setOnFormSubmit, hideImageForm } from './image-edit-form.js';
+import { onSubmitForm } from './uploading-image.js';
 import { getData } from './api.js';
 import './scale.js';
 import './effects.js';
-import './message.js';
+import './modals.js';
 
 getData()
   .then((userImages) => renderGallery(userImages))
-  .catch((err) => showAlert(err));
+  .catch(() => showDialog('error'));
 
-setOnFormSubmit(hideImageForm);
+onSubmitForm();

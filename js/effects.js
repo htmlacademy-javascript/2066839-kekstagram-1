@@ -1,5 +1,3 @@
-import { resetScaleValue } from './scale.js';
-
 const EFFECTS = {
   none: {
     style: 'none',
@@ -95,7 +93,6 @@ const onEffectChange = (evt) => {
     return;
   }
   activeEffect = EFFECTS[evt.target.value] ?? EFFECTS.none;
-  resetScaleValue();
 
   if (isDefault()) {
     resetEffects();

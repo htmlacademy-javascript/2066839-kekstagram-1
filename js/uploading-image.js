@@ -1,7 +1,5 @@
-import { showErrorMessage, showSuccessMessage } from './message.js';
-import { showAlert } from './util.js';
+import { showDialog } from './modals.js';
 import { sendData } from './api.js';
-import { resetScaleValue } from './scale.js';
 import { resetEffects } from './effects.js';
 
 const MAX_COMMENT_LENGTH = 140;
@@ -58,46 +56,38 @@ pristine.addValidator(
   COMMENTS_ERROR_MESSAGE
 );
 
-const blockSubmitButton = () => {
-  submitFormButton.disabled = true;
-  submitFormButton.textContent = SubmitButtonText.SENDING;
-};
-
-const unblockSubmitButton = () => {
-  submitFormButton.disabled = false;
-  submitFormButton.textContent = SubmitButtonText.IDLE;
-};
-
-export const setOnFormSubmit = (onSuccess) => {
-  imageUploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-
-    const isValid = pristine.validate();
-    if (isValid) {
-      blockSubmitButton();
-      sendData(new FormData(evt.target))
-        .then(() => showAlert('Данные успешно отправлены', 'green'))
-        .then(onSuccess)
-        .catch((err) => {
-          showAlert(err);
-          showErrorMessage();
-        })
-        .finally(unblockSubmitButton);
-    }
-  });
-};
-
 export const hideImageForm = () => {
   formOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  fileField.value = '';
-  tagsField.value = '';
-  commentsField.value = '';
+  imageUploadForm.reset();
   pristine.reset();
-  resetScaleValue();
   resetEffects();
-  showSuccessMessage();
+};
+
+const changeButtonStatus = (disable) => {
+  submitFormButton.disabled = disable;
+
+  if (disable) {
+    submitFormButton.textContent = SubmitButtonText.SENDING;
+  } else {
+    submitFormButton.textContent = SubmitButtonText.IDLE;
+  }
+};
+
+export const onSubmitForm = (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (isValid) {
+    changeButtonStatus(true);
+    sendData(new FormData(evt.target))
+      .then(() => showDialog('success'))
+      .then(hideImageForm)
+      .catch(() => showDialog('error'))
+      .finally(() => {
+        changeButtonStatus(false);
+      });
+  }
 };
 
 const showImageForm = () => {
@@ -118,4 +108,5 @@ function onDocumentKeydown(evt) {
   }
 }
 
+imageUploadForm.addEventListener('submit', onSubmitForm);
 fileField.addEventListener('change', () => showImageForm());
