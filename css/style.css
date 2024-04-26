@@ -1196,7 +1196,7 @@ main {
 /**
  * Экраны ошибки и успеха загрузки изображения
  */
-
+.error-dialog,
 .error,
 .success {
   position: fixed;
@@ -1213,6 +1213,7 @@ main {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.error-dialog__inner,
 .error__inner,
 .success__inner {
   position: relative;
@@ -1241,6 +1242,7 @@ main {
   padding-bottom: 75px;
 }
 
+.error-dialog__title,
 .error__title {
   position: relative;
 
@@ -1257,6 +1259,7 @@ main {
   font-size: 32px;
 }
 
+.error-dialog__title::before,
 .error__title::before {
   content: "";
   position: absolute;

@@ -1,18 +1,11 @@
-const successDialogTemplate = document.querySelector('#success')
+const errorDialogTemplate = document.querySelector('#error-dialog')
   .content
-  .querySelector('.success');
-const errorDialogTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
+  .querySelector('.error-dialog');
 
 let activeDialog;
 
 export const showDialog = (template) => {
-  if (template === 'error') {
-    activeDialog = errorDialogTemplate.cloneNode(true);
-  } else if (template === 'success') {
-    activeDialog = successDialogTemplate.cloneNode(true);
-  }
+  activeDialog = template.cloneNode(true);
 
   const buttonClose = activeDialog.querySelector('button');
 
@@ -32,7 +25,8 @@ export const showDialog = (template) => {
 
 function hideDialog() {
   activeDialog.remove();
-  document.removeEventListener('keydown', onDocumentKeydown);
+  activeDialog = null;
+  document.removeEventListener('keydown', onDocumentKeydown, true);
 }
 
 function onDocumentKeydown(evt) {
@@ -42,3 +36,12 @@ function onDocumentKeydown(evt) {
     hideDialog();
   }
 }
+
+export const showAlert = () => {
+  const template = errorDialogTemplate.cloneNode(true);
+  document.body.append(template);
+
+  setTimeout(() => {
+    template.remove();
+  }, 3000);
+};

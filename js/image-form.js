@@ -20,6 +20,12 @@ const imageEditCloseButton = imageUploadForm.querySelector('.img-upload__cancel'
 const tagsField = imageUploadForm.querySelector('.text__hashtags');
 const commentsField = imageUploadForm.querySelector('.text__description');
 const submitFormButton = imageUploadForm.querySelector('.img-upload__submit');
+const successDialogTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+const errorDialogTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
 const pristine = new Pristine(imageUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -81,9 +87,9 @@ export const onSubmitForm = (evt) => {
   if (isValid) {
     changeButtonStatus(true);
     sendData(new FormData(evt.target))
-      .then(() => showDialog('success'))
+      .then(() => showDialog(successDialogTemplate))
       .then(hideImageForm)
-      .catch(() => showDialog('error'))
+      .catch(() => showDialog(errorDialogTemplate))
       .finally(() => {
         changeButtonStatus(false);
       });
