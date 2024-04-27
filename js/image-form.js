@@ -74,21 +74,22 @@ export const hideImageForm = () => {
 const changeButtonStatus = (disable) => {
   submitFormButton.disabled = disable;
 
-  if (disable) {
-    submitFormButton.textContent = SubmitButtonText.SENDING;
-  } else {
-    submitFormButton.textContent = SubmitButtonText.IDLE;
-  }
+  submitFormButton.textContent = submitFormButton.disabled ?
+    SubmitButtonText.SENDING :
+    SubmitButtonText.IDLE;
 };
 
 export const onSubmitForm = (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
+
   if (isValid) {
     changeButtonStatus(true);
     sendData(new FormData(evt.target))
-      .then(() => showDialog(successDialogTemplate))
-      .then(hideImageForm)
+      .then(() => {
+        showDialog(successDialogTemplate);
+        hideImageForm();
+      })
       .catch(() => showDialog(errorDialogTemplate))
       .finally(() => {
         changeButtonStatus(false);

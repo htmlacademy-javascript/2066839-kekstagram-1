@@ -1,7 +1,6 @@
 const SCALE_STEP = 25;
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
-// const SCALE_DEFAULT = 100;
 
 const scaleUpButton = document.querySelector('.scale__control--bigger');
 const scaleDownButton = document.querySelector('.scale__control--smaller');
@@ -26,8 +25,6 @@ const onClickButtonSmaller = () => {
 
   scaleImage(newValue);
 };
-
-// export const resetScaleValue = () => scaleImage(SCALE_DEFAULT);
 
 scaleUpButton.addEventListener('click', onClickButtonBigger);
 scaleDownButton.addEventListener('click', onClickButtonSmaller);
