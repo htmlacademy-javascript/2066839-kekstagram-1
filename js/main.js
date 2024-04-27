@@ -1,7 +1,16 @@
-import { createGallery } from './render-comments.js';
 import { renderGallery } from './gallery.js';
-import './image-edit-form.js';
+import { onSubmitForm } from './image-form.js';
+import { getData } from './api.js';
 import './scale.js';
 import './effects.js';
+import { showAlert } from './modals.js';
 
-renderGallery(createGallery());
+getData()
+  .then((userImages) => {
+    renderGallery(userImages);
+  })
+  .catch(() => {
+    showAlert();
+  });
+
+onSubmitForm();

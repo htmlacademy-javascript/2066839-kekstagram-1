@@ -1,6 +1,6 @@
-const errorDialogTemplate = document.querySelector('#error-dialog')
+const alertDialogTemplate = document.querySelector('#alert-dialog')
   .content
-  .querySelector('.error-dialog');
+  .querySelector('.alert-dialog');
 
 let activeDialog;
 
@@ -38,7 +38,7 @@ function onDocumentKeydown(evt) {
 }
 
 export const showAlert = () => {
-  const template = errorDialogTemplate.cloneNode(true);
+  const template = alertDialogTemplate.cloneNode(true);
   document.body.append(template);
 
   setTimeout(() => {
