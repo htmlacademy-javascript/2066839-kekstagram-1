@@ -4,10 +4,15 @@ import { getData } from './api.js';
 import './scale.js';
 import './effects.js';
 import { showAlert } from './modals.js';
+import { init, getFilteredPictures } from './filter.js';
+import { debounce } from './util.js';
+
+const debouncedRenderGallery = debounce(renderGallery);
 
 getData()
-  .then((userImages) => {
-    renderGallery(userImages);
+  .then((pictures) => {
+    init(pictures, debouncedRenderGallery);
+    renderGallery(getFilteredPictures());
   })
   .catch(() => {
     showAlert();

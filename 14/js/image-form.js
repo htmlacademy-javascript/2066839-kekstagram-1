@@ -13,9 +13,12 @@ const SubmitButtonText = {
   SENDING: 'Отправляю...',
 };
 
+const FILE_TYPES = ['jpeg', 'jpg', 'png'];
+
 const imageUploadForm = document.querySelector('.img-upload__form');
 const fileField = imageUploadForm.querySelector('.img-upload__input');
 const formOverlay = imageUploadForm.querySelector('.img-upload__overlay');
+const imageUploadPreview = formOverlay.querySelector('.img-upload__preview img');
 const imageEditCloseButton = imageUploadForm.querySelector('.img-upload__cancel');
 const tagsField = imageUploadForm.querySelector('.text__hashtags');
 const commentsField = imageUploadForm.querySelector('.text__description');
@@ -97,7 +100,17 @@ export const onSubmitForm = (evt) => {
   }
 };
 
+const checkingSelectedImage = () => {
+  const file = fileField.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((el) => fileName.endsWith(el));
+  if (matches) {
+    imageUploadPreview.src = URL.createObjectURL(file);
+  }
+};
+
 const showImageForm = () => {
+  checkingSelectedImage();
   formOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
