@@ -24,7 +24,7 @@ export const renderThumbnails = (pictures) => {
     const thumbnail = createThumbnail(picture);
     fragment.append(thumbnail);
   });
-
+  container.querySelectorAll('.picture').forEach((picture) => picture.remove());
   container.append(fragment);
 };
 
