@@ -11,7 +11,7 @@ const socialCommentTemplate = document.querySelector('#social-comment')
   .querySelector('.social__comment');
 
 let comments = [];
-let commentsShows = 0;
+let commentsVisibleCount = 0;
 
 const createComment = ({ avatar, name, message }) => {
   const comment = socialCommentTemplate.cloneNode(true);
@@ -32,24 +32,24 @@ const renderPhotoDetails = ({ url, likes, description }) => {
 };
 
 const renderComments = () => {
-  commentsShows += COMMENTS_STEP;
+  commentsVisibleCount += COMMENTS_STEP;
 
-  if (commentsShows >= comments.length) {
+  if (commentsVisibleCount >= comments.length) {
     commentsLoader.classList.add('hidden');
-    commentsShows = comments.length;
+    commentsVisibleCount = comments.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
 
   const fragment = document.createDocumentFragment();
 
-  for (let i = 0; i < commentsShows; i++) {
+  for (let i = 0; i < commentsVisibleCount; i++) {
     const commentElement = createComment(comments[i]);
     fragment.append(commentElement);
   }
 
   commentsList.innerHTML = '';
-  commentsVisible.textContent = commentsShows;
+  commentsVisible.textContent = commentsVisibleCount;
   commentsList.append(fragment);
 };
 
@@ -67,19 +67,25 @@ export const showBigPicture = (data) => {
   }
 };
 
+const resetComments = () => {
+  commentsVisibleCount = 0;
+  comments = [];
+  commentsVisible.textContent = 0;
+  commentsCount.textContent = 0;
+};
+
+const hideBigPicture = () => {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('.modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
+  resetComments();
+};
+
 function onDocumentKeydown(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     hideBigPicture();
   }
-}
-
-function hideBigPicture() {
-  bigPicture.classList.add('hidden');
-  document.body.classList.remove('.modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
-  commentsShows = 0;
-  comments = [];
 }
 
 const onCancelButtonClick = () => hideBigPicture();

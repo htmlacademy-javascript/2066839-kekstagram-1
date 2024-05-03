@@ -1,21 +1,17 @@
-import { renderGallery } from './gallery.js';
-import { onSubmitForm } from './image-form.js';
+import { renderGallery, setPictures } from './gallery.js';
 import { getData } from './api.js';
+import './image-form.js';
 import './scale.js';
 import './effects.js';
 import { showAlert } from './modals.js';
-import { init, getFilteredPictures } from './filter.js';
-import { debounce } from './util.js';
-
-const debouncedRenderGallery = debounce(renderGallery);
+import { initFilters } from './filters.js';
 
 getData()
   .then((pictures) => {
-    init(pictures, debouncedRenderGallery);
-    renderGallery(getFilteredPictures());
+    setPictures(pictures);
+    initFilters();
+    renderGallery(pictures);
   })
   .catch(() => {
     showAlert();
   });
-
-onSubmitForm();
