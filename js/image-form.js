@@ -7,6 +7,7 @@ const MAX_TAG_COUNT = 5;
 const COMMENTS_ERROR_MESSAGE = 'Не более 140 символов';
 const VALID_TAGS = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAGS_ERROR_MESSAGE = 'Хэштеги не валидны';
+const FILE_TYPES = ['jpeg', 'jpg', 'png'];
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -16,6 +17,7 @@ const SubmitButtonText = {
 const imageUploadForm = document.querySelector('.img-upload__form');
 const fileField = imageUploadForm.querySelector('.img-upload__input');
 const formOverlay = imageUploadForm.querySelector('.img-upload__overlay');
+const imageUploadPreview = formOverlay.querySelector('.img-upload__preview img');
 const imageEditCloseButton = imageUploadForm.querySelector('.img-upload__cancel');
 const tagsField = imageUploadForm.querySelector('.text__hashtags');
 const commentsField = imageUploadForm.querySelector('.text__description');
@@ -97,7 +99,18 @@ export const onSubmitForm = (evt) => {
   }
 };
 
-const showImageForm = () => {
+const setPreviewImage = () => {
+  const file = fileField.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((el) => fileName.endsWith(el));
+
+  if (matches) {
+    imageUploadPreview.src = URL.createObjectURL(file);
+  }
+};
+
+const onImageChange = () => {
+  setPreviewImage();
   formOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
@@ -116,4 +129,4 @@ function onDocumentKeydown(evt) {
 }
 
 imageUploadForm.addEventListener('submit', onSubmitForm);
-fileField.addEventListener('change', () => showImageForm());
+fileField.addEventListener('change', onImageChange);

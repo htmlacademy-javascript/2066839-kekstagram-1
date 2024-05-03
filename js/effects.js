@@ -71,10 +71,7 @@ export const resetEffects = () => {
 
 const onSliderUpdate = () => {
   valueEl.value = sliderEl.noUiSlider.get();
-
-  if (!isDefault()) {
-    imageEl.style.filter = `${activeEffect.style}(${valueEl.value}${activeEffect.unit})`;
-  }
+  imageEl.style.filter = `${activeEffect.style}(${valueEl.value}${activeEffect.unit})`;
 };
 
 const updateSlider = () => {
@@ -92,6 +89,7 @@ const onEffectChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
+
   activeEffect = EFFECTS[evt.target.value] ?? EFFECTS.none;
 
   if (isDefault()) {
