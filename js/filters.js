@@ -14,7 +14,7 @@ const getRandomNumber = () => Math.random() - 0.5;
 
 const sortByComments = (a, b) => b.comments.length - a.comments.length;
 
-export const sortPictureByType = (type) => {
+const sortPictureByType = (type) => {
   const pictures = getPictures();
 
   switch (type) {
