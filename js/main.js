@@ -1,6 +1,6 @@
 import { renderGallery, setPictures } from './gallery.js';
 import { getData } from './api.js';
-import './image-form.js';
+import './form-image.js';
 import './scale.js';
 import './effects.js';
 import { showAlert } from './modals.js';
