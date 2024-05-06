@@ -45,15 +45,15 @@ const EFFECTS = {
 
 let activeEffect = EFFECTS.none;
 
-const imageEl = document.querySelector('.img-upload__preview img');
-const effectsEl = document.querySelector('.effects');
-const valueEl = document.querySelector('.effect-level__value');
-const sliderEl = document.querySelector('.effect-level__slider');
-const sliderContainerEl = document.querySelector('.img-upload__effect-level');
+const imageElement = document.querySelector('.img-upload__preview img');
+const effectsElement = document.querySelector('.effects');
+const valueElement = document.querySelector('.effect-level__value');
+const sliderElement = document.querySelector('.effect-level__slider');
+const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 
 const isDefault = () => activeEffect === EFFECTS.none;
 
-noUiSlider.create(sliderEl, {
+noUiSlider.create(sliderElement, {
   range: {
     min: EFFECTS.none.min,
     max: EFFECTS.none.max,
@@ -65,17 +65,17 @@ noUiSlider.create(sliderEl, {
 
 export const resetEffects = () => {
   activeEffect = EFFECTS.none;
-  imageEl.removeAttribute('style');
-  sliderContainerEl.classList.add('hidden');
+  imageElement.removeAttribute('style');
+  sliderContainerElement.classList.add('hidden');
 };
 
 const onSliderUpdate = () => {
-  valueEl.value = sliderEl.noUiSlider.get();
-  imageEl.style.filter = `${activeEffect.style}(${valueEl.value}${activeEffect.unit})`;
+  valueElement.value = sliderElement.noUiSlider.get();
+  imageElement.style.filter = `${activeEffect.style}(${valueElement.value}${activeEffect.unit})`;
 };
 
 const updateSlider = () => {
-  sliderEl.noUiSlider.updateOptions({
+  sliderElement.noUiSlider.updateOptions({
     range: {
       min: activeEffect.min,
       max: activeEffect.max,
@@ -96,9 +96,9 @@ const onEffectChange = (evt) => {
     resetEffects();
   } else {
     updateSlider();
-    sliderContainerEl.classList.remove('hidden');
+    sliderContainerElement.classList.remove('hidden');
   }
 };
 
-sliderEl.noUiSlider.on('update', onSliderUpdate);
-effectsEl.addEventListener('change', onEffectChange);
+sliderElement.noUiSlider.on('update', onSliderUpdate);
+effectsElement.addEventListener('change', onEffectChange);

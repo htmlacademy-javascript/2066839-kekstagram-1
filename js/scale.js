@@ -4,15 +4,15 @@ const MIN_SCALE = 25;
 
 const scaleUpButton = document.querySelector('.scale__control--bigger');
 const scaleDownButton = document.querySelector('.scale__control--smaller');
-const scaleInputEl = document.querySelector('.scale__control--value');
-const imageEl = document.querySelector('.img-upload__preview img');
+const scaleInputElement = document.querySelector('.scale__control--value');
+const imageElement = document.querySelector('.img-upload__preview img');
 
 const scaleImage = (value) => {
-  imageEl.style.transform = `scale(${value / 100})`;
-  scaleInputEl.value = `${value}%`;
+  imageElement.style.transform = `scale(${value / 100})`;
+  scaleInputElement.value = `${value}%`;
 };
 
-const getValue = () => parseInt(scaleInputEl.value, 10);
+const getValue = () => parseInt(scaleInputElement.value, 10);
 
 const onClickButtonBigger = () => {
   const newValue = Math.min(getValue() + SCALE_STEP, MAX_SCALE);
